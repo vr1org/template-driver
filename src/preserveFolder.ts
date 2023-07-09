@@ -1,5 +1,6 @@
-async function preserveFolder(action: () => Promise<void>): Promise<void> {
+async function preserveFolder<T extends void | any>(action: () => Promise<T>): Promise<T> {
   const folder = process.cwd();
-  await action();
+  const result = await action();
   if (process.cwd() !== folder) process.chdir(folder);
+  return result;
 }
